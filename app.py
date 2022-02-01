@@ -103,7 +103,7 @@ def mongoConnect(urlstring):
 
 
 app= Flask(__name__)
-CORS(app)
+CORS(app,support_credentials=True)
 api = Api(app)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -111,7 +111,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route("/urlinput", methods=['POST'])
-@cross_origin()
+@cross_origin(supports_credentials=True)
 def urlinput():
     data=request.get_json()
     url = list(data.values())[0]
@@ -123,7 +123,7 @@ def urlinput():
         return "URL Already There !!"
 
 @app.route("/urllist", methods=['GET'])
-@cross_origin()
+@cross_origin(supports_credentials=True)
 def urllist():
     listurl= mongoConnect("getallurl")
     return jsonify(listurl)
