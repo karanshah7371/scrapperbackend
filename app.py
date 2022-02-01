@@ -103,7 +103,12 @@ def mongoConnect(urlstring):
 
 
 app= Flask(__name__)
+CORS(app)
 api = Api(app)
+
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+
 
 @app.route("/urlinput", methods=['POST'])
 @cross_origin()
@@ -122,6 +127,8 @@ def urlinput():
 def urllist():
     listurl= mongoConnect("getallurl")
     return jsonify(listurl)
+
+
 
 if __name__=="__main__":
     app.run()
