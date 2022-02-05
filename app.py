@@ -19,6 +19,7 @@ def respgen(url):
         content = extractor.get_content_from_url(url)
         f = open("gen.txt", "w")
         f.write(extractor)
+        f.close()
         
         
     except:
@@ -28,6 +29,7 @@ def respgen(url):
         text = article.text 
         f = open("gen.txt", "w")
         f.write(text)
+        f.close()
 
 
 app= Flask(__name__)
