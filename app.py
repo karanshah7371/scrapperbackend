@@ -49,7 +49,7 @@ def urlinput():
     respgen(url)
     try:
         print(curr_path)
-        return send_from_directory(curr_path,"gen.txt",as_attachment=True),{'Content-Disposition': 'attachment'}
+        return send_from_directory(curr_path,"gen.txt",as_attachment=True)
     except Exception:
         return "Not Working"        
     
