@@ -9,13 +9,14 @@ import json
 import os
 
 
+curr_path=os.getcwd()
+
 def respgen(url):
     
     extractor = extractors.ArticleExtractor()
 
     try:
         content = extractor.get_content_from_url(url)
-        curr_path=os.getcwd()
         f = open(url+".txt", "w")
         f.write(extractor)
         
@@ -44,6 +45,7 @@ def urlinput():
     url = list(data.values())[0]
     print(url)
     try:
+        print(curr_path)
         return send_from_directory(curr_path,url+."txt",
                                              as_attachment=True)
     except Exception:
