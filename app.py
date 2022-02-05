@@ -36,7 +36,7 @@ app= Flask(__name__)
 CORS(app,support_credentials=True)
 api = Api(app)
 
-app.config['CORS_HEADERS'] = 'Content-Type'
+#app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 
