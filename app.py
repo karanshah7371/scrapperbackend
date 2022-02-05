@@ -17,7 +17,7 @@ def respgen(url):
 
     try:
         content = extractor.get_content_from_url(url)
-        f = open("gen.csv", "w")
+        f = open("gen.txt", "w")
         f.write(extractor)
         f.close()
         
@@ -27,7 +27,7 @@ def respgen(url):
         article.download()
         article.parse()
         text = article.text 
-        f = open("gen.csv", "w")
+        f = open("gen.txt", "w")
         f.write(text)
         f.close()
 
@@ -49,7 +49,7 @@ def urlinput():
     respgen(url)
     try:
         print(curr_path)
-        return send_from_directory(curr_path,"gen.csv",as_attachment=True)
+        return send_from_directory(curr_path,"gen.txt",as_attachment=True)
     except Exception:
         return "Not Working"        
     
