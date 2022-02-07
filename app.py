@@ -66,8 +66,6 @@ def urllist():
 @app.route("/urlfile", methods=['POST'])
 @cross_origin(supports_credentials=True)
 def urlfile():
-    f = request.files['file']
-    f.save(f.filename)
     return 'Ho gayi upload'
 
 
