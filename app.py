@@ -68,7 +68,7 @@ def urllist():
 def urlfile():
     f = request.files['file']
     f.save(f.filename)
-    return 'file uploaded successfully'
+    return 'Ho gayi upload'
 
 
 
