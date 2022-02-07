@@ -9,7 +9,10 @@ import json
 import os
 
 
+
 curr_path=os.getcwd()
+
+
 
 def respgen(url):
     
@@ -36,7 +39,7 @@ app= Flask(__name__)
 CORS(app,support_credentials=True)
 api = Api(app)
 
-#app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 
@@ -49,7 +52,7 @@ def urlinput():
     respgen(url)
     try:
         print(curr_path)
-        return send_from_directory(curr_path,"gen.txt",as_attachment=True)
+        return send_from_directory(curr_path,"gen.txt",as_attachment=True),{'Content-Disposition': 'attachment'}
     except Exception:
         return "Not Working"        
     
@@ -59,6 +62,13 @@ def urlinput():
 def urllist():
     listurl= "get se \t\ go "
     return jsonify(listurl)
+
+@app.route("/urlfile", methods=['POST'])
+@cross_origin(supports_credentials=True)
+def urlfileinput():
+    f = request.files['file']
+    f.save(f.filename)
+    return 'file uploaded successfully'
 
 
 
