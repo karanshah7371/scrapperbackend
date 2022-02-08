@@ -2,6 +2,7 @@ from flask import request
 from flask import Flask,send_from_directory
 from flask import jsonify
 from flask_restful import Resource, Api, reqparse
+from werkzeug.utils import secure_filename
 from flask_cors import CORS,cross_origin
 from boilerpy3 import extractors
 from newspaper import Article
@@ -65,10 +66,12 @@ def urllist():
 
 @app.route("/urlfile", methods=['POST'])
 @cross_origin(supports_credentials=True)
-def urlfile():
-    return 'Ho gayi upload'
+def urlfileinput():
+    f = request.files['']
+    f.save(secure_filename(f.filename))
+    return 'file uploaded successfully'
 
 
 
 if __name__=="__main__":
-    app.run()
+    app.run(debug=True)
