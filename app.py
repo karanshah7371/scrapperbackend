@@ -109,7 +109,7 @@ def urlfileinput():
         newzip.write(name)
     newzip.close()
     
-    return send_from_directory(curr_path,"generated.zip",as_attachment=True),{'Content-Disposition': 'attachment'}
+    return send_from_directory(curr_path,"generated.zip", mimetype='application/zip',as_attachment=True),{'Content-Disposition': 'attachment'}
 
 
 
