@@ -8,6 +8,8 @@ from boilerpy3 import extractors
 from newspaper import Article
 import json
 import os
+from zipfile import ZipFile
+
 
 
 
@@ -15,25 +17,46 @@ curr_path=os.getcwd()
 
 
 
-def respgen(url):
+def respgen(url,control,count):
     
-    extractor = extractors.ArticleExtractor()
+    if control=="single":
+        extractor = extractors.ArticleExtractor()
 
-    try:
-        content = extractor.get_content_from_url(url)
-        f = open("gen.txt", "w")
-        f.write(extractor)
-        f.close()
-        
-        
-    except:
-        article= Article(url)
-        article.download()
-        article.parse()
-        text = article.text 
-        f = open("gen.txt", "w")
-        f.write(text)
-        f.close()
+        try:
+            content = extractor.get_content_from_url(url)
+            f = open("gen.txt", "w")
+            f.write(extractor)
+            f.close()
+            
+            
+        except:
+            article= Article(url)
+            article.download()
+            article.parse()
+            text = article.text 
+            f = open("gen.txt", "w")
+            f.write(text)
+            f.close()
+    elif control=="file":
+        extractor = extractors.ArticleExtractor()
+
+        try:
+            content = extractor.get_content_from_url(url)
+            name="gen"+str(count)+".txt"
+            f = open(name, "w")
+            f.write(extractor)
+            f.close()
+            
+            
+        except:
+            article= Article(url)
+            article.download()
+            article.parse()
+            text = article.text 
+            name="gen"+str(count)+".txt"
+            f = open(name, "w")
+            f.write(text)
+            f.close()
 
 
 app= Flask(__name__)
@@ -50,7 +73,7 @@ def urlinput():
     data=request.get_json()
     url = list(data.values())[0]
     print(url)
-    respgen(url)
+    respgen(url,"")
     try:
         print(curr_path)
         return send_from_directory(curr_path,"gen.txt",as_attachment=True),{'Content-Disposition': 'attachment'}
@@ -69,7 +92,24 @@ def urllist():
 def urlfileinput():
     f = request.files['']
     f.save(secure_filename(f.filename))
-    return 'file uploaded successfully'
+    file=open(secure_filename(f.filename))
+    url=[]
+    for line in file:
+        url.append(line.strip())
+        
+    urlcount= len(url)
+    for i, val in enumerate(url):
+        respgen(val,"file",i)
+    print(urlcount)
+    newzip= ZipFile("generated.zip","w")
+    for i in range(urlcount):
+        print(i)
+        name="gen"+str(i)+".txt"
+        file_name= "generated.zip"
+        newzip.write(name)
+    newzip.close()
+    
+    return send_from_directory(curr_path,"generated.zip",as_attachment=True),{'Content-Disposition': 'attachment'}
 
 
 
