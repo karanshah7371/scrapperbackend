@@ -90,7 +90,7 @@ def urllist():
 @app.route("/urlfile", methods=['POST'])
 @cross_origin(supports_credentials=True)
 def urlfileinput():
-    f = request.files['']
+    f = request.files['file']
     f.save(secure_filename(f.filename))
     file=open(secure_filename(f.filename))
     url=[]
