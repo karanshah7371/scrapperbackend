@@ -112,7 +112,10 @@ def urlfileinput():
     newzip.close()
     
     bucket = storage.bucket()
+    blob = bucket.blob("generated.zip")
+    
     blob.upload_from_filename("generated.zip")
+    
     
     blob=make_public()
     
