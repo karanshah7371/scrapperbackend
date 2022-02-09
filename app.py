@@ -116,7 +116,7 @@ def urlfileinput():
     
     blob=make_public()
     
-    var url= blob.public_url
+    url= blob.public_url
     
     return url
 
