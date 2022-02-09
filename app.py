@@ -27,7 +27,10 @@ def respgen(url,control,count):
 
         try:
             content = extractor.get_content_from_url(url)
+            metadata= extractor.get_doc_from_url(url)
+            title= metadata.title
             f = open("gen.txt", "w")
+            f.write(title)
             f.write(extractor)
             f.close()
             
@@ -45,8 +48,11 @@ def respgen(url,control,count):
 
         try:
             content = extractor.get_content_from_url(url)
+            metadata= extractor.get_doc_from_url(url)
+            title= metadata.title
             name="gen"+str(count)+".txt"
             f = open(name, "w")
+            f.write(title)
             f.write(extractor)
             f.close()
             
