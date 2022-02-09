@@ -117,7 +117,7 @@ def urlfileinput():
     blob.upload_from_filename("generated.zip")
     
     
-    blob=make_public()
+    blob.make_public()
     
     url= blob.public_url
     
