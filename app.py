@@ -10,6 +10,7 @@ import json
 import os
 from zipfile import ZipFile
 from firebase_admin import credentials, initialize_app, storage
+import time
 
 cred = credentials.Certificate("keycred.json")
 initialize_app(cred, {'storageBucket': 'scrapper-algrow.appspot.com'})
@@ -95,7 +96,10 @@ def urlfileinput():
     f = request.files['']
     f.save(secure_filename(f.filename))
     file=open(secure_filename(f.filename))
-    zipfilename=secure_filename(f.filename)+".zip"
+    timestr= str(int(time.time()))
+    trim= secure_filename(f.filename)
+    trim_filename= trim.replace(".txt","")
+    zipfilename=trim_filename+timestr+".zip"
     url=[]
     for line in file:
         url.append(line.strip())
