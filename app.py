@@ -75,7 +75,7 @@ def urlinput():
     data=request.get_json()
     url = list(data.values())[0]
     print(url)
-    respgen(url,"single",0)
+    respgen(url,"single")
     try:
         print(curr_path)
         return send_from_directory(curr_path,"gen.txt",as_attachment=True),{'Content-Disposition': 'attachment'}
@@ -95,6 +95,7 @@ def urlfileinput():
     f = request.files['']
     f.save(secure_filename(f.filename))
     file=open(secure_filename(f.filename))
+    zipfilename=secure_filename(f.filename)+".zip"
     url=[]
     for line in file:
         url.append(line.strip())
@@ -103,23 +104,19 @@ def urlfileinput():
     for i, val in enumerate(url):
         respgen(val,"file",i)
     print(urlcount)
-    newzip= ZipFile("generated.zip","w")
+    newzip= ZipFile(zipfilename,"w")
     for i in range(urlcount):
         print(i)
         name="gen"+str(i)+".txt"
-        file_name= "generated.zip"
         newzip.write(name)
     newzip.close()
     
     bucket = storage.bucket()
-    blob = bucket.blob("generated.zip")
+    blob.upload_from_filename(zipfilename)
     
-    blob.upload_from_filename("generated.zip")
+    blob=make_public()
     
-    
-    blob.make_public()
-    
-    url= blob.public_url
+    var url= blob.public_url
     
     return url
 
