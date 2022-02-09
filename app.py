@@ -9,8 +9,10 @@ from newspaper import Article
 import json
 import os
 from zipfile import ZipFile
+from firebase_admin import credentials, initialize_app, storage
 
-
+cred = credentials.Certificate("keycred.json")
+initialize_app(cred, {'storageBucket': 'scrapper-algrow.appspot.com'})
 
 
 curr_path=os.getcwd()
@@ -73,7 +75,7 @@ def urlinput():
     data=request.get_json()
     url = list(data.values())[0]
     print(url)
-    respgen(url,"single",0)
+    respgen(url,"single")
     try:
         print(curr_path)
         return send_from_directory(curr_path,"gen.txt",as_attachment=True),{'Content-Disposition': 'attachment'}
@@ -90,7 +92,7 @@ def urllist():
 @app.route("/urlfile", methods=['POST'])
 @cross_origin(supports_credentials=True)
 def urlfileinput():
-    f = request.files['file']
+    f = request.files['']
     f.save(secure_filename(f.filename))
     file=open(secure_filename(f.filename))
     url=[]
@@ -109,7 +111,14 @@ def urlfileinput():
         newzip.write(name)
     newzip.close()
     
-    return send_from_directory(curr_path,"generated.zip", mimetype='application/zip',as_attachment=True),{'Content-Disposition': 'attachment'}
+    bucket = storage.bucket()
+    blob.upload_from_filename("generated.zip")
+    
+    blob=make_public()
+    
+    var url= blob.public_url
+    
+    return url
 
 
 
