@@ -111,12 +111,16 @@ def urlfileinput():
         newzip.write(name)
     newzip.close()
     
+    
     bucket = storage.bucket()
+    blob = bucket.blob(zipfilename)
+    
     blob.upload_from_filename(zipfilename)
     
-    blob=make_public()
     
-    var url= blob.public_url
+    blob.make_public()
+    
+    url= blob.public_url
     
     return url
 
