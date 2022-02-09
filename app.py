@@ -40,7 +40,9 @@ def respgen(url,control,count):
             article.download()
             article.parse()
             text = article.text 
+            title=article.title
             f = open("gen.txt", "w")
+            f.write(title)
             f.write(text)
             f.close()
     elif control=="file":
@@ -62,8 +64,10 @@ def respgen(url,control,count):
             article.download()
             article.parse()
             text = article.text 
+            title = article.title
             name="gen"+str(count)+".txt"
             f = open(name, "w")
+            f.write(title)
             f.write(text)
             f.close()
 
