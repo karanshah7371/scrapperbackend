@@ -30,7 +30,10 @@ def respgen(url,control,count):
             metadata= extractor.get_doc_from_url(url)
             title= metadata.title
             f = open("gen.txt", "w")
+            f.write("** ")
             f.write(title)
+            f.write(" ** ")
+            f.write("\n \n")
             f.write(extractor)
             f.close()
             
@@ -42,7 +45,10 @@ def respgen(url,control,count):
             text = article.text 
             title=article.title
             f = open("gen.txt", "w")
+            f.write("** ")
             f.write(title)
+            f.write("** ")
+            f.write("\n \n")
             f.write(text)
             f.close()
     elif control=="file":
@@ -54,7 +60,10 @@ def respgen(url,control,count):
             title= metadata.title
             name="gen"+str(count)+".txt"
             f = open(name, "w")
+            f.write("** ")
             f.write(title)
+            f.write(" ** ")
+            f.write("\n \n")
             f.write(extractor)
             f.close()
             
@@ -67,7 +76,10 @@ def respgen(url,control,count):
             title = article.title
             name="gen"+str(count)+".txt"
             f = open(name, "w")
+            f.write("** ")
             f.write(title)
+            f.write(" ** ")
+            f.write("\n \n")
             f.write(text)
             f.close()
 
