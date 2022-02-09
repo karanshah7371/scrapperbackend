@@ -76,7 +76,7 @@ def urlinput():
     data=request.get_json()
     url = list(data.values())[0]
     print(url)
-    respgen(url,"single")
+    respgen(url,"single",0)
     try:
         print(curr_path)
         return send_from_directory(curr_path,"gen.txt",as_attachment=True),{'Content-Disposition': 'attachment'}
