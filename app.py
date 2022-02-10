@@ -40,6 +40,7 @@ def respgen(url,control,count):
             f.write("\n \n")
             f.write(extractor)
             f.close()
+            return fname
             
             
         except:
@@ -57,6 +58,8 @@ def respgen(url,control,count):
             f.write("\n \n")
             f.write(text)
             f.close()
+            return fname
+            
     elif control=="file":
         extractor = extractors.ArticleExtractor()
 
@@ -104,20 +107,18 @@ def urlinput():
     data=request.get_json()
     url = list(data.values())[0]
     print(url)
-    respgen(url,"single",0)
+    fname=respgen(url,"single",0)
     try:
         print(curr_path)
         
-        ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
-        fname="Scrap"+".txt"
-        fgName="Scrap"+ranString+".txt"
+        
         
         print("1")
         bucket = storage.bucket()
         print("02")
         blob = bucket.blob(fname)
         print("03")
-        blob.upload_from_filename(fgName)
+        blob.upload_from_filename(fname)
         print("04")
         blob.make_public()
         print("05")
