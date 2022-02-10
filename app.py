@@ -111,10 +111,16 @@ def urlinput():
         ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
         fname="Scrap"+".txt"
         fgName="Scrap"+ranString+".txt"
+        
+        print("1")
         bucket = storage.bucket()
+        print("02")
         blob = bucket.blob(fname)
+        print("03")
         blob.upload_from_filename(fgName)
+        print("04")
         blob.make_public()
+        print("05")
         url= blob.public_url
         
         
