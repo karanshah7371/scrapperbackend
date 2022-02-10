@@ -11,6 +11,8 @@ import os
 from zipfile import ZipFile
 from firebase_admin import credentials, initialize_app, storage
 import time
+import random
+import string
 
 cred = credentials.Certificate("keycred.json")
 initialize_app(cred, {'storageBucket': 'scrapper-algrow.appspot.com'})
@@ -29,7 +31,8 @@ def respgen(url,control,count):
             content = extractor.get_content_from_url(url)
             metadata= extractor.get_doc_from_url(url)
             title= metadata.title
-            f = open("gen.txt", "w")
+            fname=url+".txt"
+            f = open(fname, "w")
             f.write("** ")
             f.write(title)
             f.write(" ** ")
@@ -44,7 +47,8 @@ def respgen(url,control,count):
             article.parse()
             text = article.text 
             title=article.title
-            f = open("gen.txt", "w")
+            fname=url+".txt"
+            f = open(fname, "w")
             f.write("** ")
             f.write(title)
             f.write("** ")
@@ -58,7 +62,7 @@ def respgen(url,control,count):
             content = extractor.get_content_from_url(url)
             metadata= extractor.get_doc_from_url(url)
             title= metadata.title
-            name="gen"+str(count)+".txt"
+            name=url+".txt"
             f = open(name, "w")
             f.write("** ")
             f.write(title)
@@ -74,7 +78,7 @@ def respgen(url,control,count):
             article.parse()
             text = article.text 
             title = article.title
-            name="gen"+str(count)+".txt"
+            name=url+".txt"
             f = open(name, "w")
             f.write("** ")
             f.write(title)
@@ -101,7 +105,17 @@ def urlinput():
     respgen(url,"single",0)
     try:
         print(curr_path)
-        return send_from_directory(curr_path,"gen.txt",as_attachment=True),{'Content-Disposition': 'attachment'}
+        
+        ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
+        fname=url+res+".txt"
+        bucket = storage.bucket()
+        blob = bucket.blob(fname)
+        blob.upload_from_filename(fname)
+        blob.make_public()
+        url= blob.public_url
+        
+        
+        return url
     except Exception:
         return "Not Working"        
     
@@ -118,10 +132,11 @@ def urlfileinput():
     f = request.files['']
     f.save(secure_filename(f.filename))
     file=open(secure_filename(f.filename))
-    timestr= str(int(time.time()))
+    ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
+    
     trim= secure_filename(f.filename)
     trim_filename= trim.replace(".txt","")
-    zipfilename=trim_filename+timestr+".zip"
+    zipfilename=trim_filename+ranString+".zip"
     url=[]
     for line in file:
         url.append(line.strip())
@@ -133,7 +148,7 @@ def urlfileinput():
     newzip= ZipFile(zipfilename,"w")
     for i in range(urlcount):
         print(i)
-        name="gen"+str(i)+".txt"
+        name=url[i]+".txt"
         newzip.write(name)
     newzip.close()
     
