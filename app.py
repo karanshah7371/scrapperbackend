@@ -31,7 +31,8 @@ def respgen(url,control,count):
             content = extractor.get_content_from_url(url)
             metadata= extractor.get_doc_from_url(url)
             title= metadata.title
-            fname=url+".txt"
+            ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
+            fname="Scrap"+ranString+".txt"
             f = open(fname, "w")
             f.write("** ")
             f.write(title)
@@ -47,7 +48,8 @@ def respgen(url,control,count):
             article.parse()
             text = article.text 
             title=article.title
-            fname=url+".txt"
+            ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
+            fname="Scrap"+ranString+".txt"
             f = open(fname, "w")
             f.write("** ")
             f.write(title)
@@ -62,7 +64,7 @@ def respgen(url,control,count):
             content = extractor.get_content_from_url(url)
             metadata= extractor.get_doc_from_url(url)
             title= metadata.title
-            name=url+".txt"
+            name="Scraped-"+str(count+1)+".txt"
             f = open(name, "w")
             f.write("** ")
             f.write(title)
@@ -78,7 +80,7 @@ def respgen(url,control,count):
             article.parse()
             text = article.text 
             title = article.title
-            name=url+".txt"
+            name="Scraped-"+str(count+1)+".txt"
             f = open(name, "w")
             f.write("** ")
             f.write(title)
@@ -107,7 +109,7 @@ def urlinput():
         print(curr_path)
         
         ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
-        fname=url+res+".txt"
+        fname="Scrap"+ranString+".txt"
         bucket = storage.bucket()
         blob = bucket.blob(fname)
         blob.upload_from_filename(fname)
@@ -148,7 +150,7 @@ def urlfileinput():
     newzip= ZipFile(zipfilename,"w")
     for i in range(urlcount):
         print(i)
-        name=url[i]+".txt"
+        name="Scraped-"+str(i+1)+".txt"
         newzip.write(name)
     newzip.close()
     
