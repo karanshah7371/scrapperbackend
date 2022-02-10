@@ -31,8 +31,8 @@ def respgen(url,control,count):
             content = extractor.get_content_from_url(url)
             metadata= extractor.get_doc_from_url(url)
             title= metadata.title
-            ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
-            fname="Scrap"+ranString+".txt"
+            
+            fname="Scrap"+".txt"
             f = open(fname, "w")
             f.write("** ")
             f.write(title)
@@ -48,8 +48,8 @@ def respgen(url,control,count):
             article.parse()
             text = article.text 
             title=article.title
-            ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
-            fname="Scrap"+ranString+".txt"
+            
+            fname="Scrap"+".txt"
             f = open(fname, "w")
             f.write("** ")
             f.write(title)
@@ -109,10 +109,11 @@ def urlinput():
         print(curr_path)
         
         ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
-        fname="Scrap"+ranString+".txt"
+        fname="Scrap"+".txt"
+        fgName="Scrap"+ranString+".txt"
         bucket = storage.bucket()
         blob = bucket.blob(fname)
-        blob.upload_from_filename(fname)
+        blob.upload_from_filename(fgName)
         blob.make_public()
         url= blob.public_url
         
