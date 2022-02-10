@@ -32,7 +32,8 @@ def respgen(url,control,count):
             metadata= extractor.get_doc_from_url(url)
             title= metadata.title
             
-            fname="Scrap"+".txt"
+            ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
+            fname="Scrap"+ranString+".txt"
             f = open(fname, "w")
             f.write("** ")
             f.write(title)
@@ -50,7 +51,8 @@ def respgen(url,control,count):
             text = article.text 
             title=article.title
             
-            fname="Scrap"+".txt"
+            ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
+            fname="Scrap"+ranString+".txt"
             f = open(fname, "w")
             f.write("** ")
             f.write(title)
