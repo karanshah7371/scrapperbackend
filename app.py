@@ -205,7 +205,7 @@ def scrapebykey():
 
     jsonData= json.loads(response.text)
 
-    ulrs=[]
+    urls=[]
     
     for i in range(6):
         urls[i] = jsonData["results"][i]["link"]
