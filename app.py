@@ -185,7 +185,7 @@ def urlfileinput():
 @app.route("/scrapebykey", methods=['POST'])
 @cross_origin(supports_credentials=True)
 def scrapebykey():
-    data=requests.request.get_json()
+    data=request.get_json()
     key = list(data.values())[0]
     keyword= key + "+article"
 
@@ -201,7 +201,7 @@ def scrapebykey():
         'x-rapidapi-key': "f4e71a02c6msh3ed103fafc11fcbp159b85jsn30e3dc424c9a"
         }
 
-    response = request("GET", url, headers=headers)
+    response = requests.request("GET", url, headers=headers)
 
     jsonData= json.loads(response.text)
 
