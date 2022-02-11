@@ -14,6 +14,9 @@ import time
 import random
 import string
 
+
+
+
 cred = credentials.Certificate("keycred.json")
 initialize_app(cred, {'storageBucket': 'scrapper-algrow.appspot.com'})
 
@@ -176,6 +179,64 @@ def urlfileinput():
     url= blob.public_url
     
     return url
+
+
+@app.route("/scrapebykey", methods=['POST'])
+@cross_origin(supports_credentials=True)
+def scrapebykey():
+    data=request.get_json()
+    key = list(data.values())[0]
+    keyword= key + "+article"
+
+    clean_keyword= keyword.replace(" ","+")
+
+
+    url ="https://google-search3.p.rapidapi.com/api/v1/search/q=" + clean_keyword + "&num=100&lr=lang_en&hl=en&cr=US"
+
+    headers = {
+        'x-user-agent': "desktop",
+        'x-proxy-location': "IN",
+        'x-rapidapi-host': "google-search3.p.rapidapi.com",
+        'x-rapidapi-key': "f4e71a02c6msh3ed103fafc11fcbp159b85jsn30e3dc424c9a"
+        }
+
+    response = requests.request("GET", url, headers=headers)
+
+    jsonData= json.loads(response.text)
+
+    ulrs=[]
+    
+    for i in range(6):
+        urls[i] = jsonData["results"][i]["link"]
+    
+
+    for i in range(6):
+        respgen(urls[i],"file",i)
+        
+    zipfilename="keyword"+'_'.join(random.choices(string.ascii_uppercase + string.digits, k = 4))   
+    newzip= ZipFile(zipfilename,"w")
+    for i in range(6):
+            print(i)
+            name="Scraped-"+str(i+1)+".txt"
+            newzip.write(name)
+    
+    newzip.close()
+    
+    
+    bucket = storage.bucket()
+    blob = bucket.blob(zipfilename)
+    
+    blob.upload_from_filename(zipfilename)
+    
+    
+    blob.make_public()
+    
+    url= blob.public_url
+    
+    return url
+
+
+
 
 
 
