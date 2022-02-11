@@ -13,6 +13,7 @@ from firebase_admin import credentials, initialize_app, storage
 import time
 import random
 import string
+import requests
 
 
 
@@ -184,7 +185,7 @@ def urlfileinput():
 @app.route("/scrapebykey", methods=['POST'])
 @cross_origin(supports_credentials=True)
 def scrapebykey():
-    data=request.get_json()
+    data=requests.request.get_json()
     key = list(data.values())[0]
     keyword= key + "+article"
 
