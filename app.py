@@ -200,7 +200,7 @@ def scrapebykey():
         'x-rapidapi-key': "f4e71a02c6msh3ed103fafc11fcbp159b85jsn30e3dc424c9a"
         }
 
-    response = requests.request("GET", url, headers=headers)
+    response = request("GET", url, headers=headers)
 
     jsonData= json.loads(response.text)
 
