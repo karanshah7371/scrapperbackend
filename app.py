@@ -214,7 +214,7 @@ def scrapebykey():
     for i,url in enumerate(urls):
         respgen(url,"file",i)
         
-    zipfilename="keyword"+'_'.join(random.choices(string.ascii_uppercase + string.digits, k = 4))   
+    zipfilename="keyword"+'_'.join(random.choices(string.ascii_uppercase + string.digits, k = 4)) +".zip"
     newzip= ZipFile(zipfilename,"w")
     for i in range(6):
             print(i)
