@@ -208,11 +208,11 @@ def scrapebykey():
     urls=[]
     
     for i in range(6):
-        urls[i] = jsonData["results"][i]["link"]
+        urls.append(jsonData["results"][i]["link"])
     
 
-    for i in range(6):
-        respgen(urls[i],"file",i)
+    for i,url in enumerate(urls):
+        respgen(url,"file",i)
         
     zipfilename="keyword"+'_'.join(random.choices(string.ascii_uppercase + string.digits, k = 4))   
     newzip= ZipFile(zipfilename,"w")
@@ -220,6 +220,7 @@ def scrapebykey():
             print(i)
             name="Scraped-"+str(i+1)+".txt"
             newzip.write(name)
+    
     
     newzip.close()
     
