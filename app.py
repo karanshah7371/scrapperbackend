@@ -113,7 +113,7 @@ def respgen(url,control,count):
                 text = "This URL: "+url+" is not scrapable." 
                 name="Scraped-"+str(count+1)+".txt"
                 f = open(name, "w")
-                f.write(title)
+                f.write(text)
                 f.close()
                 
 
