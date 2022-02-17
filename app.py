@@ -49,23 +49,33 @@ def respgen(url,control,count):
             
             
         except:
-            article= Article(url)
-            article.download()
-            article.parse()
-            text = article.text 
-            title=article.title
+            try:
+                article= Article(url)
+                article.download()
+                article.parse()
+                text = article.text 
+                title=article.title
+                
+                ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
+                fname="Scrap"+ranString+".txt"
+                f = open(fname, "w")
+                f.write("** ")
+                f.write(title)
+                f.write("** ")
+                f.write("\n \n")
+                f.write(text)
+                f.close()
+                return fname
             
-            ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
-            fname="Scrap"+ranString+".txt"
-            f = open(fname, "w")
-            f.write("** ")
-            f.write(title)
-            f.write("** ")
-            f.write("\n \n")
-            f.write(text)
-            f.close()
-            return fname
-            
+            except:
+                text="URL- "+url+ " - not scrapable."
+                ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
+                fname="Scrap"+ranString+".txt"
+                f = open(fname, "w")
+                f.write(text)               
+                f.close()
+                return fname
+                
     elif control=="file":
         extractor = extractors.ArticleExtractor()
 
@@ -84,20 +94,28 @@ def respgen(url,control,count):
             
             
         except:
-            article= Article(url)
-            article.download()
-            article.parse()
-            text = article.text 
-            title = article.title
-            name="Scraped-"+str(count+1)+".txt"
-            f = open(name, "w")
-            f.write("** ")
-            f.write(title)
-            f.write(" ** ")
-            f.write("\n \n")
-            f.write(text)
-            f.close()
-
+            try:
+                article= Article(url)
+                article.download()
+                article.parse()
+                text = article.text 
+                title = article.title
+                name="Scraped-"+str(count+1)+".txt"
+                f = open(name, "w")
+                f.write("** ")
+                f.write(title)
+                f.write(" ** ")
+                f.write("\n \n")
+                f.write(text)
+                f.close()
+            
+            except:
+                text = "This URL: "+url+" is not scrapable." 
+                name="Scraped-"+str(count+1)+".txt"
+                f = open(name, "w")
+                f.write(title)
+                f.close()
+                
 
 app= Flask(__name__)
 CORS(app,support_credentials=True)
