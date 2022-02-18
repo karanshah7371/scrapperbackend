@@ -265,6 +265,7 @@ def feedback():
     fname="Feedback" + ranString+".txt"
     f = open(fname, "w")
     f.write(key)
+    f.close()
     bucket = storage.bucket()
     blob = bucket.blob(fname)
     blob.upload_from_filename(fname)
