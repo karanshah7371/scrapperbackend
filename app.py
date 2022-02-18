@@ -270,6 +270,8 @@ def feedback():
     blob.upload_from_filename(fname)
     url=blob.public_url
     
+    return "ok"
+    
 
 if __name__=="__main__":
     app.run(debug=True)
