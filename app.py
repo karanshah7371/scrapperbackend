@@ -260,13 +260,15 @@ def scrapebykey():
 def feedback():
     data=request.get_json()
     key = list(data.values())[0]
+    print(key)
     ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
-    fname="Feedback" + ranString
+    fname="Feedback" + ranString+".txt"
     f = open(fname, "w")
     f.write(key)
     bucket = storage.bucket()
     blob = bucket.blob(fname)
     blob.upload_from_filename(fname)
+    url=blob.public_url
     
 
 if __name__=="__main__":
