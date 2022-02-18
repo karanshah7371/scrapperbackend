@@ -232,7 +232,7 @@ def scrapebykey():
     for i,url in enumerate(urls):
         respgen(url,"file",i)
         
-    zipfilename="keyword"+'_'.join(random.choices(string.ascii_uppercase + string.digits, k = 4)) +".zip"
+    zipfilename=key+'_'.join(random.choices(string.ascii_uppercase + string.digits, k = 4)) +".zip"
     newzip= ZipFile(zipfilename,"w")
     for i in range(6):
             print(i)
@@ -260,6 +260,7 @@ def scrapebykey():
 def feedback():
     data=request.get_json()
     key = list(data.values())[0]
+    print(data)
     print(key)
     ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
     fname="Feedback" + ranString+".txt"
