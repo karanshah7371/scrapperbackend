@@ -255,10 +255,19 @@ def scrapebykey():
     
     return url
 
-
-
-
-
+@app.route("/feedback", methods=['POST'])
+@cross_origin(supports_credentials=True)
+def feedback():
+    data=request.get_json()
+    key = list(data.values())[0]
+    ranString= '-'.join(random.choices(string.ascii_uppercase + string.digits, k = 3))
+    fname="Feedback" + ranString
+    f = open(fname, "w")
+    f.write(key)
+    bucket = storage.bucket()
+    blob = bucket.blob(fname)
+    blob.upload_from_filename(fname)
+    
 
 if __name__=="__main__":
     app.run(debug=True)
