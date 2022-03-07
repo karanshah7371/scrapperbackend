@@ -129,6 +129,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin(supports_credentials=True)
 def urlinput():
     data=request.get_json()
+    print(data)
     url = list(data.values())[0]
     print(url)
     fname=respgen(url,"single",0)
